@@ -34,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * | Tab  |   Q  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   M  |Enter |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * | Shift|   W  |   X  |   C  |   V  |   B  |   N  |   ,  |   ;  |   :  |  Up  |Shift |
+   * | Shift|   W  |   X  |   C  |   V  |   B  |   N  |   ,  |   .  |   /  |  Up  |Shift |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * | Ctrl | Func | GUI  | Alt  |Lower |    Space    |Raise |AltGr | Left | Down |Right |
    * `-----------------------------------------------------------------------------------'
@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_AZ] = LAYOUT_planck_mit(
     KC_ESC,  BE_A,    BE_Z,    BE_E,    BE_R,    BE_T,    BE_Y,    BE_U,    BE_I,    BE_O,    BE_P,    KC_BSPC,
     KC_TAB,  BE_Q,    BE_S,    BE_D,    BE_F,    BE_G,    BE_H,    BE_J,    BE_K,    BE_L,    BE_M,    KC_ENT,
-    KC_LSFT, BE_W,    BE_X,    BE_C,    BE_V,    BE_B,    BE_N,    BE_COMM, KC_COMM, BE_SCLN, KC_UP,   KC_RSFT,
+    KC_LSFT, BE_W,    BE_X,    BE_C,    BE_V,    BE_B,    BE_N,    BE_COMM, BE_DOT,  BE_SLSH, KC_UP,   KC_RSFT,
     KC_LCTL, MO(_FU), KC_LGUI, KC_LALT, MO(_LO),      KC_SPC,      MO(_RA), KC_ALGR, KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
