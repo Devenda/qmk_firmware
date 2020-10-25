@@ -26,6 +26,12 @@ enum planck_layers {
   _FU
 };
 
+// Tap Dance declarations
+enum {
+    TD_LPRN,
+    TD_RPRN
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Azerty
@@ -48,20 +54,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    /* Lower
    * ,-----------------------------------------------------------------------------------.
-   * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
+   * |   &  |   é  |   "  |   '  |   (  |   §  |   è  |   !  |   ç  |   à  |   )  | Del  |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
+   * |      |      |      |      |      |      |      |   _  |   +  |TD ({[|TD )}]|  |   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO ~ |ISO | | Home | End  |      |
+   * |      |      |      |      |      |      |      |      |      |      | Pg Up|      |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+   * |      |      |      |      |      |             |      |      | Home | Pg Do| End  |
    * `-----------------------------------------------------------------------------------'
    */
   [_LO] = LAYOUT_planck_mit(
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  _______,
-    _______, _______, _______, _______, _______,     _______,      _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY
+    BE_SUP3, BE_AMPR, BE_EACU, BE_DQUO, BE_QUOT, BE_LPRN, BE_SECT, BE_EGRV, BE_EXLM, BE_CCED,     BE_AGRV,     KC_DEL,
+    _______, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_PLUS, TD(TD_LPRN), TD(TD_RPRN), KC_PIPE,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     KC_PGUP,     _______,
+    _______, _______, _______, _______, _______,     _______,      _______, _______, KC_HOME,     KC_PGDN,     KC_END
   ),
 
   /* Raise
@@ -99,6 +105,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______,     _______,      _______, _______, _______, _______, _______) 
 };
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [TD_LPRN] = ACTION_TAP_DANCE_DOUBLE(BE_LPRN, BE_LCBR),
+    [TD_RPRN] = ACTION_TAP_DANCE_DOUBLE(BE_RPRN, BE_RCBR)
+};
+
 
 // bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //   switch (keycode) {
