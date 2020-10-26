@@ -107,46 +107,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // Tap Dance definitions
+void dance_lprn_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code16(BE_LPRN);
+    } else if (state->count == 2) {
+        register_code16(BE_LCBR);
+    } else {
+        register_code16(BE_LBRC);
+    }
+}
+
+void dance_lprn_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code16(BE_LPRN);
+    } else if (state->count == 2) {
+        unregister_code16(BE_LCBR);
+    } else {
+        unregister_code16(BE_LBRC);
+    }
+}
+
+void dance_rprn_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code16(BE_RPRN);
+    } else if (state->count == 2) {
+        register_code16(BE_RCBR);
+    } else {
+        register_code16(BE_RBRC);
+    }
+}
+
+void dance_rprn_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code16(BE_RPRN);
+    } else if (state->count == 2) {
+        unregister_code16(BE_RCBR);
+    } else {
+        unregister_code16(BE_RBRC);
+    }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for Caps Lock
-    [TD_LPRN] = ACTION_TAP_DANCE_DOUBLE(BE_LPRN, BE_LCBR),
-    [TD_RPRN] = ACTION_TAP_DANCE_DOUBLE(BE_RPRN, BE_RCBR)
+    [TD_LPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_lprn_finished, dance_lprn_reset),
+    [TD_RPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_rprn_finished, dance_rprn_reset),
 };
-
-
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//   switch (keycode) {
-//     case AZERT:
-//       if (record->event.pressed) {
-//         print("mode just switched to AZERT and this is a huge string\n");
-//         set_single_persistent_default_layer(_AZERT);
-//       }
-
-//       return false;
-//       break;  
-//     case LOWER:
-//       if (record->event.pressed) {
-//         layer_on(_LOWER);
-//         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//       } else {
-//         layer_off(_LOWER);
-//         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//       }
-
-//       return false;
-//       break;
-//     case RAISE:
-//       if (record->event.pressed) {
-//         layer_on(_RAISE);
-//         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//       } else {
-//         layer_off(_RAISE);
-//         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//       }
-
-//       return false;
-//       break;
-//   }
-
-//   return true;
-// }
