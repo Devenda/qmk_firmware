@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * | Tab  |   Q  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   M  |Enter |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * | Shift|   W  |   X  |   C  |   V  |   B  |   N  |   ,  |   .  |   /  |  Up  |Shift |
+   * | Shift|   W  |   X  |   C  |   V  |   B  |   N  |   ,  |   ;  |   :  |  Up  |Shift |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * | Ctrl | Func | GUI  | Alt  |Lower |    Space    |Raise |AltGr | Left | Down |Right |
    * `-----------------------------------------------------------------------------------'
@@ -49,13 +49,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_AZ] = LAYOUT_planck_mit(
     KC_ESC,  BE_A,    BE_Z,    BE_E,    BE_R,    BE_T,    BE_Y,    BE_U,    BE_I,    BE_O,    BE_P,    KC_BSPC,
     KC_TAB,  BE_Q,    BE_S,    BE_D,    BE_F,    BE_G,    BE_H,    BE_J,    BE_K,    BE_L,    BE_M,    KC_ENT,
-    KC_LSFT, BE_W,    BE_X,    BE_C,    BE_V,    BE_B,    BE_N,    BE_COMM, BE_DOT,  BE_SLSH, KC_UP,   KC_RSFT,
+    KC_LSFT, BE_W,    BE_X,    BE_C,    BE_V,    BE_B,    BE_N,    BE_COMM, BE_SCLN, BE_COLN, KC_UP,   KC_RSFT,
     KC_LCTL, MO(_FU), KC_LGUI, KC_LALT, MO(_LO),      KC_SPC,      MO(_RA), KC_ALGR, KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
    /* Lower
    * ,-----------------------------------------------------------------------------------.
-   * |   &  |   é  |   "  |   '  |   (  |   §  |   è  |   !  |   ç  |   à  |   )  | Del  |
+   * | ESC  |   &  |   é  |   "  |   '  |   (  |   §  |   è  |   !  |   ç  |   à  | Del  |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |   _  |   +  |TD ({[|TD )}]|  |   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------------------------------------------------'
    */
   [_LO] = LAYOUT_planck_mit(
-    BE_AMPR, BE_EACU, BE_DQUO, BE_QUOT, BE_LPRN, BE_SECT, BE_EGRV, BE_EXLM, BE_CCED, BE_AGRV,     BE_RPRN,     KC_DEL,
+    KC_ESC,  BE_AMPR, BE_EACU, BE_DQUO, BE_QUOT, BE_LPRN, BE_SECT, BE_EGRV, BE_EXLM, BE_CCED,     BE_AGRV,     KC_DEL,
     _______, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_PLUS, TD(TD_LPRN), TD(TD_RPRN), KC_PIPE,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,     KC_PGUP,     _______,
     _______, _______, _______, _______, _______,     _______,      _______, _______, KC_HOME,     KC_PGDN,     KC_END
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |   -  |   =  |   [  |   ]  |  \   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |      |      |      | Vol+ |      |
+   * |      |   <  |   >  |      |      |      |      |      |      |      | Vol+ |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |             |      |      | Prev | Vol+ | Play |
    * `-----------------------------------------------------------------------------------'
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RA] = LAYOUT_planck_mit(
     KC_ESC,  BE_1,    BE_2,    BE_3,    BE_4,    BE_5,    BE_6,    BE_7,    BE_8,    BE_9,    BE_0,    KC_DEL,
     _______, _______, _______, _______, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_VOLU, KC_MPLY,
+    _______, BE_LABK, BE_RABK, _______, _______, _______, _______, _______, _______, _______, KC_VOLU, KC_MPLY,
     _______, _______, _______, _______, _______,     _______,      _______, _______, KC_MPRV, KC_VOLD, KC_MNXT
   ),
   
