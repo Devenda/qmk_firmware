@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include "keycode.h" // added for code completion
 #include "keymap_belgian.h"
+#include "sendstring_belgian.h"
 
 enum planck_layers {
   _AZ,
@@ -33,6 +34,11 @@ enum {
     TD_RPRN,
     TD_LABK,
     TD_RABK
+};
+
+// Custom keycodes (macros,...)
+enum custom_keycodes {
+    SQLSEL = SAFE_RANGE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -95,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,-----------------------------------------------------------------------------------.
    * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |      |      |      |      |      |
+   * |      |      |SQLSEL|      |      |      |      |      |      |      |      |      |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      |      |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -104,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
  [_FU] = LAYOUT_planck_mit(
     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,        KC_F11,  KC_F12,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______, _______,
+    _______, _______, SQLSEL,  _______, _______, _______, _______, _______, _______, _______,       _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,       _______, _______,
     _______, _______, _______, _______, _______,     _______,      _______, _______, LCTL(BE_MINS), _______, LCTL(LSFT(BE_MINS)) 
    ) 
@@ -116,4 +122,20 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_RPRN] = ACTION_TAP_DANCE_DOUBLE(BE_RPRN, BE_RCBR),
     [TD_LABK] = ACTION_TAP_DANCE_DOUBLE(BE_LABK, BE_LBRC),
     [TD_RABK] = ACTION_TAP_DANCE_DOUBLE(BE_RABK, BE_RBRC),
+};
+
+// Custom keycodes
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case SQLSEL:
+        if (record->event.pressed) {
+            // when keycode SQLSEL is pressed
+            SEND_STRING("SELECT *\r\nFROM \r\nORDER BY 1 DESC");
+            SEND_STRING(SS_TAP(X_UP));
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+    }
+    return true;
 };
