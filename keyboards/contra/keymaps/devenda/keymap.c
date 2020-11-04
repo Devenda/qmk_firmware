@@ -30,7 +30,9 @@ enum planck_layers {
 // Tap Dance declarations
 enum {
     TD_LPRN,
-    TD_RPRN
+    TD_RPRN,
+    TD_LABK,
+    TD_RABK
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -55,19 +57,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    /* Lower 
    * ,-----------------------------------------------------------------------------------.
-   * |  ESC |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+   * |  ESC |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
    * |   |  |   @  |   #  |   _  |TD ({[|  /   |  \   |TD )}]|   -  |   +  |   =  |  *   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * |      |      |      |      |   <  |      |      |   >  |      |      | Pg Up|      |
+   * |      |      |      |      |TD <[ |      |      |TD >] |   %  |   $  | Pg Up|      |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |             |      |      | Home | Pg Do| End  |
    * `-----------------------------------------------------------------------------------'
    */
   [_LO] = LAYOUT_planck_mit(
-    KC_ESC,  BE_1,    BE_2,    BE_3,    BE_4,        BE_5,    BE_6,    BE_7,        BE_8,    BE_9,    BE_0,    KC_DEL,
-    BE_PIPE, BE_AT,   BE_HASH, BE_UNDS, TD(TD_LPRN), BE_SLSH, BE_BSLS, TD(TD_RPRN), BE_MINS, BE_PLUS, BE_EQL, BE_ASTR,
-    _______, _______, _______, _______, BE_LABK,     _______, _______, BE_RABK,     _______, _______, KC_PGUP, _______,
+    KC_ESC,  BE_1,    BE_2,    BE_3,    BE_4,        BE_5,    BE_6,    BE_7,        BE_8,    BE_9,    BE_0,    KC_BSPC,
+    BE_PIPE, BE_AT,   BE_HASH, BE_UNDS, TD(TD_LPRN), BE_SLSH, BE_BSLS, TD(TD_RPRN), BE_MINS, BE_PLUS, BE_ASTR, BE_EQL,
+    _______, _______, _______, _______, TD(TD_LABK), _______, _______, TD(TD_RABK), BE_PERC, BE_DLR,  KC_PGUP, _______,
     _______, _______, _______, _______, _______,         _______,      _______,     _______, KC_HOME, KC_PGDN, KC_END
   ),
 
@@ -75,18 +77,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,-----------------------------------------------------------------------------------.
    * | ESC  |   &  |   é  |   "  |   '  |   (  |   §  |   è  |   !  |   ç  |   à  | Del  |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * |   |  |   @  |   #  |   _  |TD ({[|  /   |  \   |TD )}]|   -  |   +  |   =  |  *   |
+   * |   |  |   @  |   #  |   _  |TD ({ |  /   |  \   |TD )} |   -  |   +  |   =  |  *   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * |      |      |      |      |   <  |      |      |   >  |      |      | Vol+ |      |
+   * |      |      |      |      |TD <[ |      |      |TD >] |   %  |   $  | Vol+ |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |             |      |      | Prev | Vol+ | Play |
    * `-----------------------------------------------------------------------------------'
    */
   [_RA] = LAYOUT_planck_mit(
-    KC_ESC,  BE_AMPR, BE_EACU, BE_DQUO, BE_QUOT,     BE_LPRN, BE_SECT, BE_EGRV,     BE_EXLM, BE_CCED,  BE_AGRV, KC_DEL,
-    BE_PIPE, BE_AT,   BE_HASH, BE_UNDS, TD(TD_LPRN), BE_SLSH, BE_BSLS, TD(TD_RPRN), BE_MINS, BE_PLUS,  BE_EQL,  BE_ASTR,
-    _______, _______, _______, _______, BE_LABK,     _______, _______, BE_RABK,     _______, _______,  KC_VOLU, KC_MPLY,
-    _______, _______, _______, _______, _______,         _______,      _______,     _______, KC_MPRV,  KC_VOLD, KC_MNXT
+    KC_ESC,  BE_AMPR, BE_EACU, BE_DQUO, BE_QUOT,     BE_LPRN, BE_SECT, BE_EGRV,     BE_EXLM, BE_CCED, BE_AGRV, KC_DEL,
+    BE_PIPE, BE_AT,   BE_HASH, BE_UNDS, TD(TD_LPRN), BE_SLSH, BE_BSLS, TD(TD_RPRN), BE_MINS, BE_PLUS, BE_ASTR, BE_EQL,
+    _______, _______, _______, _______, TD(TD_LABK), _______, _______, TD(TD_RABK), BE_PERC, BE_DLR,  KC_VOLU, KC_MPLY,
+    _______, _______, _______, _______, _______,         _______,      _______,     _______, KC_MPRV, KC_VOLD, KC_MNXT
   ),
   
   /* Function
@@ -109,48 +111,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // Tap Dance definitions
-void dance_lprn_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code16(BE_LPRN);
-    } else if (state->count == 2) {
-        register_code16(BE_LCBR);
-    } else {
-        register_code16(BE_LBRC);
-    }
-}
-
-void dance_lprn_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code16(BE_LPRN);
-    } else if (state->count == 2) {
-        unregister_code16(BE_LCBR);
-    } else {
-        unregister_code16(BE_LBRC);
-    }
-}
-
-void dance_rprn_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code16(BE_RPRN);
-    } else if (state->count == 2) {
-        register_code16(BE_RCBR);
-    } else {
-        register_code16(BE_RBRC);
-    }
-}
-
-void dance_rprn_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code16(BE_RPRN);
-    } else if (state->count == 2) {
-        unregister_code16(BE_RCBR);
-    } else {
-        unregister_code16(BE_RBRC);
-    }
-}
-
 qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
-    [TD_LPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_lprn_finished, dance_lprn_reset),
-    [TD_RPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_rprn_finished, dance_rprn_reset),
+    [TD_LPRN] = ACTION_TAP_DANCE_DOUBLE(BE_LPRN, BE_LCBR),
+    [TD_RPRN] = ACTION_TAP_DANCE_DOUBLE(BE_RPRN, BE_RCBR),
+    [TD_LABK] = ACTION_TAP_DANCE_DOUBLE(BE_LABK, BE_LBRC),
+    [TD_RABK] = ACTION_TAP_DANCE_DOUBLE(BE_RABK, BE_RBRC),
 };
