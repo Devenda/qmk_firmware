@@ -11,6 +11,8 @@ enum planck_layers { _AZ, _QW, _QWS, _FU, _QMK, _NUM, _WIN };
 enum custom_keycodes {
     SQLSEL = SAFE_RANGE,
     SCRNSHT,
+    SW_QW,
+    SW_AZ
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -72,8 +74,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, BE_EXLM, BE_AT, BE_HASH, BE_DLR, BE_PERC, BE_CIRC, BE_AMPR, BE_ASTR, BE_LPRN, BE_RPRN, BE_UNDS, BE_PLUS, _______, _______, 
         _______, S(BE_Q), S(BE_W), S(BE_E), S(BE_R), S(BE_T), S(BE_Y), S(BE_U), S(BE_I), S(BE_O), S(BE_P), BE_LCBR, BE_RCBR, BE_PIPE, 
         _______, S(BE_A), S(BE_S), S(BE_D), S(BE_F), S(BE_G), S(BE_H), S(BE_J), S(BE_K), S(BE_L), BE_COLN, BE_DQUO, _______, 
-        _______, S(BE_Z), S(BE_X), S(BE_C), S(BE_V), S(BE_B), S(BE_N), S(BE_M), BE_LABK, BE_RABK, BE_QUES, _______, _______, _______, 
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
+        _______, S(BE_Z), S(BE_X), S(BE_C), S(BE_V), S(BE_B), S(BE_N), S(BE_M), BE_LABK, BE_RABK, BE_QUES, _______, S(KC_UP), _______, 
+        _______, _______, _______, _______, _______, _______, _______, _______, S(KC_LEFT), S(KC_DOWN), S(KC_RIGHT)),
 
     /* Function Layer
      * ,-----------------------------------------------------------------------------------------.
@@ -83,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |-----------------------------------------------------------------------------------------+
      * |         |     |SQLSL|     |     |     |     |     |     |     |     |      |            |
      * |-----------------------------------------------------------------------------------------+
-     * |   TRNS    |     |     |     |     |     |     |     |     |     |TRNS |Ctrl-|Pg Up|CtSh-|
+     * |   Shift   |     |     |     |     |     |     |     |     |     |Shift|Ctrl-|Pg Up|CtSh-|
      * |-----------------------------------------------------------------------------------------+
      * | TRNS | _QMK  | TRNS |               |      |             | TRNS |TRNS |Home |Pg Do| End |
      * `-----------------------------------------------------------------------------------------'
@@ -91,8 +93,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FU] = LAYOUT_directional(
         KC_NO, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
-        KC_NO, KC_NO, SQLSEL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
-        _______, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _______, LCTL(BE_MINS), KC_PGUP, LCTL(LSFT(BE_MINS)), 
+        KC_NO, KC_NO, SQLSEL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _______, 
+        KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_RSFT, LCTL(BE_MINS), KC_PGUP, LCTL(LSFT(BE_MINS)), 
         _______, TG(_QMK), _______, KC_NO, KC_NO, KC_NO, _______, _______, KC_HOME, KC_PGDN, KC_END),
 
     /* QMK Layer
@@ -109,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------------'
      */
     [_QMK] = LAYOUT_directional(
-        TG(_QMK), DF(_AZ), DF(_QW), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        TG(_QMK), SW_AZ, SW_QW, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, RESET, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
@@ -117,23 +119,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* num Layer
      * ,-----------------------------------------------------------------------------------------.
-     * |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+     * |     |     |     |     |     |     |     |     |   / |  *  |  -  |     |     |     |     |
      * |-----------------------------------------------------------------------------------------+
-     * |        |     |     |     |     |     |     |  7  |  8  |  9  |     |     |     |        |
+     * |        |     |     |     |     |     |     |  7  |  8  |  9  |  +  |     |     |        |
      * |-----------------------------------------------------------------------------------------+
-     * |         |     |     |     |     |     |     |  4  |  5  |  6  |     |      |            |
+     * |         |     |     |     |     |     |     |  4  |  5  |  6  |   + |      |            |
      * |-----------------------------------------------------------------------------------------+
-     * |           |     |     |     |     |     |     |  1  |  2  |  3  |     |     |     |     |
+     * |           |     |     |     |     |     |     |  1  |  2  |  3  | Ent |     |     |     |
      * |-----------------------------------------------------------------------------------------+
-     * |      |       |      |               |      |       0      |  .  |     |     |     |     |
+     * |      |       |      |               |      |       0      |  .  | Ent |     |     |     |
      * `-----------------------------------------------------------------------------------------'
      */
     [_NUM] = LAYOUT_directional(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _______, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_7, KC_KP_8, KC_KP_9, KC_NO, KC_NO, KC_NO, KC_NO, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_4, KC_KP_5, KC_KP_6, KC_NO, KC_NO, _______, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_1, KC_KP_2, KC_KP_3, KC_NO, KC_NO, KC_NO, KC_NO, 
-        KC_NO, KC_NO, KC_NO, _______, KC_NO, KC_KP_0, KC_KP_DOT, KC_NO, KC_NO, KC_NO, KC_NO),
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, BE_SLSH, BE_ASTR, BE_MINS, KC_NO, KC_NO, KC_NO, _______, 
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_7, KC_KP_8, KC_KP_9, BE_PLUS, KC_NO, KC_NO, KC_NO, 
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_4, KC_KP_5, KC_KP_6, BE_PLUS, KC_NO, _______, 
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_1, KC_KP_2, KC_KP_3, KC_ENT, KC_NO, KC_NO, KC_NO, 
+        KC_NO, KC_NO, KC_NO, _______, KC_NO, KC_KP_0, KC_KP_DOT, KC_ENT, KC_NO, KC_NO, KC_NO),
 
     /* Win Layer
      * ,-----------------------------------------------------------------------------------------.
@@ -160,7 +162,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SQLSEL:
             if (record->event.pressed) {
-                SEND_STRING("SELECT *\r\nFROM \r\nORDER BY 1 DESC");
+                SEND_STRING("SELECT TOP 250 *\r\nFROM \r\nWHERE 1=1\r\nORDER BY 1 DESC");
+                SEND_STRING(SS_TAP(X_UP));
                 SEND_STRING(SS_TAP(X_UP));
             }
             break;
@@ -168,6 +171,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // emulate win + shift + s
                 SEND_STRING(SS_LGUI(SS_LSFT("s")));
+            }
+            break;
+        case SW_QW:
+            if (record->event.pressed) {
+                // Permanently switch to qwerty
+                set_single_persistent_default_layer(_QW);
+            }
+            break;
+        case SW_AZ:
+            if (record->event.pressed) {
+                // Permanently switch to azerty
+                set_single_persistent_default_layer(_AZ);
             }
             break;
     }
