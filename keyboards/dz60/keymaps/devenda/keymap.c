@@ -15,7 +15,9 @@ enum custom_keycodes {
     SW_QW,
     SW_AZ,
     CU_ACE,
-    CU_TILD
+    CU_TILD,
+    CU_BCK,
+    CU_FWD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -88,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |-----------------------------------------------------------------------------------------+
      * |         |     |SQLSL|     |     |     |     |     |     |     |     |      |            |
      * |-----------------------------------------------------------------------------------------+
-     * |   Shift   |     |     |     |     |     |     |     |     |     |Shift|Ctrl-|Pg Up|CtSh-|
+     * |   Shift   |     |     |     |     |     |     |     |     |     |Shift| BCK |Pg Up| FWD |
      * |-----------------------------------------------------------------------------------------+
      * | TRNS | _QMK  | TRNS |               |      |             | TRNS |TRNS |Home |Pg Do| End |
      * `-----------------------------------------------------------------------------------------'
@@ -97,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CU_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, 
         KC_NO, KC_NO, KC_NO, CU_ACE, KC_NO, KC_NO, KC_NO, KC_NO, SQLIF, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, SQLSEL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _______, 
-        KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_RSFT, LCTL(BE_MINS), KC_PGUP, LCTL(LSFT(BE_MINS)), 
+        KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_RSFT, CU_BCK, KC_PGUP, CU_FWD, 
         _______, TG(_QMK), _______, KC_NO, KC_NO, KC_NO, _______, _______, KC_HOME, KC_PGDN, KC_END),
 
     /* QMK Layer
@@ -227,6 +229,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // Write ~
                 SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_2) SS_TAP(X_KP_6)));
+            }
+            break;
+        case CU_BCK:
+            if (record->event.pressed) {
+                if (eeconfig_read_default_layer() & (1UL << _QW)) {
+                    tap_code16(LCTL(BE_MINS));
+                } else if (eeconfig_read_default_layer() & (1UL << _AZ)) {
+                    tap_code16(LCTL(KC_MINS));
+                }
+            }
+            break;
+        case CU_FWD:
+            if (record->event.pressed) {
+                if (eeconfig_read_default_layer() & (1UL << _QW)) {
+                    tap_code16(LCTL(LSFT(BE_MINS)));
+                } else if (eeconfig_read_default_layer() & (1UL << _AZ)) {
+                    tap_code16(LCTL(LSFT(KC_MINS)));
+                }
             }
             break;
     }
