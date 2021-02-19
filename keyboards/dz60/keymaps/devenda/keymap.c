@@ -13,7 +13,9 @@ enum custom_keycodes {
     SQLIF,
     SCRNSHT,
     SW_QW,
-    SW_AZ
+    SW_AZ,
+    CU_ACE,
+    CU_TILD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -80,9 +82,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Function Layer
      * ,-----------------------------------------------------------------------------------------.
-     * |     |  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 |     |     |
+     * |  ~  |  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 |     |     |
      * |-----------------------------------------------------------------------------------------+
-     * |        |     |     |     |     |     |     |     |SQLIF|     |     |     |     |        |
+     * |        |     |     |  é  |     |     |     |     |SQLIF|     |     |     |     |        |
      * |-----------------------------------------------------------------------------------------+
      * |         |     |SQLSL|     |     |     |     |     |     |     |     |      |            |
      * |-----------------------------------------------------------------------------------------+
@@ -92,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------------'
      */
     [_FU] = LAYOUT_directional(
-        KC_NO, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, SQLIF, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
+        CU_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, 
+        KC_NO, KC_NO, KC_NO, CU_ACE, KC_NO, KC_NO, KC_NO, KC_NO, SQLIF, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, SQLSEL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _______, 
         KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_RSFT, LCTL(BE_MINS), KC_PGUP, LCTL(LSFT(BE_MINS)), 
         _______, TG(_QMK), _______, KC_NO, KC_NO, KC_NO, _______, _______, KC_HOME, KC_PGDN, KC_END),
@@ -213,6 +215,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // Permanently switch to azerty
                 set_single_persistent_default_layer(_AZ);
+            }
+            break;
+        case CU_ACE:
+            if (record->event.pressed) {
+                // Write é
+                SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_3) SS_TAP(X_KP_3)));
+            }
+            break;
+        case CU_TILD:
+            if (record->event.pressed) {
+                // Write ~
+                SEND_STRING(SS_LALT(SS_TAP(X_KP_1) SS_TAP(X_KP_2) SS_TAP(X_KP_6)));
             }
             break;
     }
