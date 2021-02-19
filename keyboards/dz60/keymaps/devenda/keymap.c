@@ -170,9 +170,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING(SS_TAP(X_UP));
                     SEND_STRING(SS_TAP(X_UP));
                 } else if (eeconfig_read_default_layer() & (1UL << _AZ)) {
-                    SEND_STRING("SELECT TOP");
+                    SEND_STRING("SELECT TOP ");
+                    tap_code(KC_2);
+                    tap_code(KC_5);
+                    tap_code(KC_0);
+                    tap_code(KC_SPC);
+                    tap_code16(LSFT(KC_8));
                     SEND_STRING(SS_TAP(X_ESC));
-                    SEND_STRING(" 250 *\r\nFROM \r\nWHERE 1=1\r\nORDER BY 1 DESC");
+                    SEND_STRING("\r\nFRO");
+                    tap_code16(LSFT(KC_M));
+                    SEND_STRING(" \r\nZHERE &-&\r\nORDER BY & DESC ");
                     SEND_STRING(SS_TAP(X_UP));
                     SEND_STRING(SS_TAP(X_UP));
                 }
