@@ -22,7 +22,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------------.
      * | ESC |  &  |  é  |  "  |  '  |  (  |  §  |  è  |  !  |  ç  |  à  |  )  |  -  |   Bkspc   |
      * |-----------------------------------------------------------------------------------------+
-     * | Tab    |  A  |  Z  |  E  |  R  |  T  |  Y  |  U  |  I  |  O  |  P  |  ^  |  $  |  Enter |
+     * | Tab    |  A  |  Z  |  E  |  R  |  T  |  Y  |  U  |  I  |  O  |  P  |  ^  |  $  |    \   |
      * |-----------------------------------------------------------------------------------------+
      * | Caps    |  Q  |  S  |  D  |  F  |  G  |  H  |  J  |  K  |  L  |  M  |  ù  |    Enter    |
      * |-----------------------------------------------------------------------------------------+
@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_AZ] = LAYOUT_directional(
         KC_ESC, BE_AMPR, BE_EACU, BE_DQUO, BE_QUOT, BE_LPRN, BE_SECT, BE_EGRV, BE_EXLM, BE_CCED, BE_AGRV, BE_RPRN, BE_MINS, KC_BSPC, 
-        KC_BSPC, KC_TAB, BE_A, BE_Z, BE_E, BE_R, BE_T, BE_Y, BE_U, BE_I, BE_O, BE_P, BE_DCIR, BE_DLR, KC_ENT, 
+        KC_BSPC, KC_TAB, BE_A, BE_Z, BE_E, BE_R, BE_T, BE_Y, BE_U, BE_I, BE_O, BE_P, BE_DCIR, BE_DLR, BE_MICR, 
         LT(_NUM, KC_TAB), BE_Q, BE_S, BE_D, BE_F, BE_G, BE_H, BE_J, BE_K, BE_L, BE_M, BE_UGRV, KC_ENT, 
         LSFT_T(BE_LABK), BE_W, BE_X, BE_C, BE_V, BE_B, BE_N, BE_COMM, BE_SCLN, BE_COLN, BE_EQL, KC_RSFT, KC_UP, KC_DEL, 
         KC_LCTL, LT(_WIN, KC_LGUI), KC_LALT, KC_SPC, MO(_FU), KC_SPC, KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RIGHT),
