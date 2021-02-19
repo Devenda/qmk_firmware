@@ -10,6 +10,7 @@ enum planck_layers { _AZ, _QW, _QWS, _FU, _QMK, _NUM, _WIN };
 // Custom keycodes (macros,...)
 enum custom_keycodes {
     SQLSEL = SAFE_RANGE,
+    SQLIF,
     SCRNSHT,
     SW_QW,
     SW_AZ
@@ -47,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |-----------------------------------------------------------------------------------------+
      * | Shift     |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  | RSh |  Up | Del |
      * |-----------------------------------------------------------------------------------------+
-     * | Ctrl |  Win  | LAlt |     Space   |  Fn  |     Space     | RAlt | Ctrl| Left| Down| Rght|
+     * | Ctrl |  Win  | LAlt |     Space   |  Fn  |  Space/Shift  | RAlt | Ctrl| Left| Down| Rght|
      * `-----------------------------------------------------------------------------------------'
      */
     [_QW] = LAYOUT_directional(
@@ -55,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, BE_Q, BE_W, BE_E, BE_R, BE_T, BE_Y, BE_U, BE_I, BE_O, BE_P, BE_LBRC, BE_RBRC, BE_BSLS, 
         LT(_NUM, KC_TAB), BE_A, BE_S, BE_D, BE_F, BE_G, BE_H, BE_J, BE_K, BE_L, BE_SCLN, BE_QUOT, KC_ENT, 
         MO(_QWS), BE_Z, BE_X, BE_C, BE_V, BE_B, BE_N, BE_M, BE_COMM, BE_DOT, BE_SLSH, MO(_QWS), KC_UP, KC_DEL, 
-        KC_LCTL, LT(_WIN, KC_LGUI), KC_LALT, KC_SPC, MO(_FU), KC_SPC, KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RIGHT),
+        KC_LCTL, LT(_WIN, KC_LGUI), KC_LALT, KC_SPC, MO(_FU), LSFT_T(KC_SPC), KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RIGHT),
 
     /* Qwerty Shifted
      * ,-----------------------------------------------------------------------------------------.
@@ -81,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------------.
      * |     |  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 |     |     |
      * |-----------------------------------------------------------------------------------------+
-     * |        |     |     |     |     |     |     |     |     |     |     |     |     |        |
+     * |        |     |     |     |     |     |     |     |SQLIF|     |     |     |     |        |
      * |-----------------------------------------------------------------------------------------+
      * |         |     |SQLSL|     |     |     |     |     |     |     |     |      |            |
      * |-----------------------------------------------------------------------------------------+
@@ -92,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_FU] = LAYOUT_directional(
         KC_NO, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, SQLIF, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, SQLSEL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, _______, 
         KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_RSFT, LCTL(BE_MINS), KC_PGUP, LCTL(LSFT(BE_MINS)), 
         _______, TG(_QMK), _______, KC_NO, KC_NO, KC_NO, _______, _______, KC_HOME, KC_PGDN, KC_END),
@@ -135,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_7, KC_KP_8, KC_KP_9, BE_PLUS, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_4, KC_KP_5, KC_KP_6, BE_PLUS, KC_NO, _______, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_KP_1, KC_KP_2, KC_KP_3, KC_ENT, KC_NO, KC_NO, KC_NO, 
-        KC_NO, KC_NO, KC_NO, _______, KC_NO, KC_KP_0, KC_KP_DOT, KC_ENT, KC_NO, KC_NO, KC_NO),
+        KC_NO, KC_NO, _______, _______, KC_NO, KC_KP_0, KC_KP_DOT, KC_ENT, KC_NO, KC_NO, KC_NO),
 
     /* Win Layer
      * ,-----------------------------------------------------------------------------------------.
@@ -155,16 +156,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, SCRNSHT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_MPLY, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_VOLU, KC_NO, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_MPRV, KC_VOLD, KC_MNXT)};
+        KC_NO, KC_NO, KC_NO, KC_MPLY, KC_NO, KC_MPLY, KC_NO, KC_NO, KC_MPRV, KC_VOLD, KC_MNXT)};
 
 // Custom keycodes
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SQLSEL:
             if (record->event.pressed) {
-                SEND_STRING("SELECT TOP 250 *\r\nFROM \r\nWHERE 1=1\r\nORDER BY 1 DESC");
-                SEND_STRING(SS_TAP(X_UP));
-                SEND_STRING(SS_TAP(X_UP));
+                if (eeconfig_read_default_layer() & (1UL << _QW)) {
+                    SEND_STRING("SELECT TOP");
+                    SEND_STRING(SS_TAP(X_ESC));
+                    SEND_STRING(" 250 *\r\nFROM \r\nWHERE 1=1\r\nORDER BY 1 DESC");
+                    SEND_STRING(SS_TAP(X_UP));
+                    SEND_STRING(SS_TAP(X_UP));
+                } else if (eeconfig_read_default_layer() & (1UL << _AZ)) {
+                    SEND_STRING("SELECT TOP");
+                    SEND_STRING(SS_TAP(X_ESC));
+                    SEND_STRING(" 250 *\r\nFROM \r\nWHERE 1=1\r\nORDER BY 1 DESC");
+                    SEND_STRING(SS_TAP(X_UP));
+                    SEND_STRING(SS_TAP(X_UP));
+                }
+            }
+            break;
+        case SQLIF:
+            if (record->event.pressed) {
+                // sql if block
+                SEND_STRING("IF \r\nBEGIN\r\n\r\nEND\r\nELSE\r\nBEGIN\r\n\r\nEND");
+                for (size_t i = 0; i < 7; i++) {
+                    SEND_STRING(SS_TAP(X_UP));
+                }
+                for (size_t i = 0; i < 3; i++) {
+                    SEND_STRING(SS_TAP(X_RIGHT));
+                }
             }
             break;
         case SCRNSHT:
